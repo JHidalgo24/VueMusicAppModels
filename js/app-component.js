@@ -108,12 +108,7 @@ Vue.component('add-item', {
         }
     },
     methods:{
-        add:function(){
-            console.log("society")
-            let song = this.data_songitem;
-            this.songs.push(song);
-            this.songItem = {songTitle:'',artist:'',length:'',genre:'',favorite:false}
-        }
+
     }
 
     , template: `
@@ -128,7 +123,7 @@ Vue.component('add-item', {
          
         </v-list-item-title>
         
-        <form @submit.prevent="add">
+        <form @submit.prevent="$emit('add-song')">
         <v-text-field
       v-model="songItem.songTitle"
       label="Title"
@@ -154,7 +149,7 @@ Vue.component('add-item', {
     ></v-text-field>
         
       
-        <button type="submit">Add</button>
+        <button  type="submit">Add</button>
         </form>
       </v-list-item-content>
 
