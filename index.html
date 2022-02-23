@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" name="viewport">
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body>
+<div id="app" @add-song="addTrash">
+    <v-app style="background-color: black" >
+
+        <div>
+            <v-app-bar
+                    color="green" app dark dense>
+                <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+                <v-toolbar-title>{{title}}</v-toolbar-title>
+
+            </v-app-bar>
+        </div>
+
+        <div>
+            <v-main fluid grid-list-md text-xs-center>
+
+                <song-card-list v-model:songs="songList" v-model:songitem="songItem" v-bind:songs="songList" v-bind:songitem="songItem"></song-card-list>
+
+
+            </v-main>
+        </div>
+
+        <div>
+        <v-footer app
+                absolute
+                dark dense>
+            <v-card-text class="py-2 white--text text-center">
+                <strong>{{title}} - 2022</strong>
+            </v-card-text>
+            </v-card>
+        </v-footer>
+        </div>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="js/app-component.js"></script>
+<script src="js/app.js"></script>
+<script>
+
+</script>
+</body>
+</html>
