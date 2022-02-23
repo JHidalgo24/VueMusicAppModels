@@ -23,7 +23,7 @@ Vue.component("song-card-list", {
 <v-row no-gutters>
     <v-col cols="auto">
         <h1 class="text-center title">Add Song</h1>
-        <add-item  v-model:songItem="songitem" v-bind:song-item="songitem"></add-item>
+        <add-item v-model:songs="songs" v-bind:songs="songs"  v-model:songItem="songitem" v-bind:song-item="songitem"></add-item>
 
     </v-col>
     <v-col>
@@ -96,6 +96,10 @@ Vue.component('add-item', {
             type:Object,
             required:true,
             default: ''
+        },
+        songs:{
+            type:Array,
+            required:true
         }
     },
     data:function () {
@@ -104,9 +108,11 @@ Vue.component('add-item', {
         }
     },
     methods:{
-        pain:function(e){
-            this.$emit(`add-song`);
-
+        add:function(){
+            console.log("society")
+            let song = this.data_songitem;
+            this.songs.push(song);
+            this.songItem = {songTitle:'',artist:'',length:'',genre:'',favorite:false}
         }
     }
 
@@ -121,6 +127,8 @@ Vue.component('add-item', {
         <v-list-item-title class="text-h6 mb-1">
          
         </v-list-item-title>
+        
+        <form @submit.prevent="add">
         <v-text-field
       v-model="songItem.songTitle"
       label="Title"
@@ -130,24 +138,24 @@ Vue.component('add-item', {
         <v-text-field
       v-model="songItem.artist"
       label="Artist"
-      required
+      
     ></v-text-field>
         <v-text-field
       v-model="songItem.length"
       
       label="Genre"
-      required
+      
     ></v-text-field>
     <v-text-field
       v-model="songItem.genre"
       
       label="Length"
-      required
+      
     ></v-text-field>
         
       
-        <button type="button" @click="pain">Add</button>
-        
+        <button type="submit">Add</button>
+        </form>
       </v-list-item-content>
 
       <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>

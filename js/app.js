@@ -24,7 +24,7 @@ const app = new Vue({
             console.log("society")
             this.songList.push(this.songItem);
             songItem = {songTitle:'',artist:'',length:'',genre:'',favorite:false}
-            console.log("Thing was added")
+
 
         }
 
