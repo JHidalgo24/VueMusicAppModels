@@ -1,4 +1,3 @@
-//pass up the @emit
 
 Vue.component("song-card-list", {
     props: {
@@ -32,8 +31,8 @@ Vue.component("song-card-list", {
     </v-col>
     <v-col>
         <h1 class="text-center title">Songs</h1>
-            <span v-for="song in songs" :key="song.objectId">
-                <song v-bind:song="song"> </song>
+            <span v-for="song in songs">
+                <song v-model:songs="songs" v-bind:songs="songs"  v-bind:song="song"> </song>
             </span> 
     </v-col>
 </v-row>
@@ -44,54 +43,108 @@ Vue.component("song-card-list", {
 Vue.component('song', {
     props: {
         song: {
-            type: Object, required: true
+            type: Object,
+            required: true
+        },
+        songs:{
+            type:Array,
+            required:true
         }
-    }, watch: {
-        favoriteEmit: function (val) {
-            song.favorite = val;
+    },
+    data:function () {
+        return{
+            albumSrc: ''
         }
-    }, template: `
+    }
+    ,
+    methods:{
+        favoriteChange(e) {
+
+
+
+            for (let i = 0; i < this.songs.length; i++) {
+                let songThingy = this.songs[i]
+                if (songThingy === e){
+                    this.songs.find(ev => ev === songThingy).favorite = e.favorite
+                }
+
+            }
+
+        },
+        removeSong(){
+
+        let x = this.songs.indexOf(this.song)
+        this.songs.splice(x,1)
+
+
+        },
+        SaveSong(error,response){
+
+            this.albumSrc = response
+
+        }
+
+
+
+    },
+    created: function(){
+          albumArt(this.song.artist,{album:this.song.album},this.SaveSong)
+
+      }
+    ,
+    template: `
     <v-card
     class="d-inline-block ma-3"
     min-width="344"
     max-width="344"
     outlined>
-    <v-list-item three-line>
+    <v-list-item  three-line>
       <v-list-item-content>
         <v-list-item-title class="text-h6 mb-1">
           {{song.songTitle}}
         </v-list-item-title>
         <v-list-item-subtitle>Artist: {{song.artist}}</v-list-item-subtitle>
-        
+        <v-list-item-subtitle>Album: {{song.album}}</v-list-item-subtitle>
         <v-list-item-subtitle>Time: {{song.length}}</v-list-item-subtitle>
         <v-list-item-subtitle>Genre:  {{song.genre}}</v-list-item-subtitle>
         
         <v-card-actions>
       
-        <favorite-btn v-bind:favorite="song.favorite"></favorite-btn>
+        <favorite-btn @change-btn="favoriteChange" v-model:song="song" v-bind:song="song"></favorite-btn>
+        <v-btn v-on:click="removeSong" class="red">Remove</v-btn>
+        
         </v-card-actions>
       </v-list-item-content>
 
-      <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+      <v-list-item-avatar tile size="80" color="grey">
+      
+      <img :src="this.albumSrc" :id="this.song.songTitle"></img>
+</v-list-item-avatar>
     </v-list-item>
 
   </v-card> `
 })
 
 Vue.component('favorite-btn', {
+    props:{
+        song:{
+            type:Object,
+            required:true
+        }
+    },
     data: function () {
         return {
-            favorite: false
+            favorite: this.song.favorite
         }
     }, methods: {
         favoriteChange() {
             this.favorite = !this.favorite
-            this.$emit('favoriteEmit', this.favorite)
-            console.log("jinkies")
+            this.$emit('change-btn',this.song)
+            this.song.favorite = this.favorite
         }
     }, template: `<v-btn v-on:click="favoriteChange" class="green" >
-      <v-icon v-show="favorite" large color="white"> mdi-star </v-icon>
-      <v-icon v-show="!favorite" large color="yellow"> mdi-star </v-icon>
+      <v-icon v-show="!favorite" large color="white"> mdi-star </v-icon>
+      <v-icon v-show="favorite" large color="yellow"> mdi-star </v-icon>
       </v-btn>`
 })
 
@@ -131,15 +184,11 @@ Vue.component('add-item', {
         
         <v-form  @submit.prevent="trigger" >
         <v-text-field v-model="songItem.songTitle" label="Title" required></v-text-field>
+        <v-text-field v-model="songItem.album" label="Album" required></v-text-field>
         <v-text-field v-model="songItem.artist" label="Artist" required></v-text-field>
         <v-text-field v-model="songItem.length" label="Genre" required></v-text-field>
         <v-text-field v-model="songItem.genre" label="Length" required></v-text-field>
         <v-btn type="submit">Add</v-btn>
         </v-form>
-    
-    </v-list-item-content>
-      <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-    </v-list-item>
-
   </v-card> `
 })

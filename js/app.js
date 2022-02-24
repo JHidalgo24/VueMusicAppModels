@@ -7,14 +7,14 @@ const app = new Vue({
     data:function () {
         return{
             title:'Playlisty',
-            songList:[{songTitle:'Take on Me',artist:'a-ha',length:'3:45',genre:'Rock',favorite:true},
-                {songTitle:'Be Alright',artist:'Zapp',length:'7:52',genre:'R&B',favorite:true},
-                {songTitle:'This Must Be the Place',artist:'Talking Heads',length:'4:56',genre:'Pop',favorite:false},
-                {songTitle:'Oogum Boogum Song',artist:'Brenton Wood',length:'3:06',genre:'Soul',favorite:false},
-                {songTitle:'You`re so Good to Me',artist:'The Beach Boys',length:'2:16',genre:'Surf',favorite:false},
-                {songTitle:'Crazy Love',artist:'Van Morrison',length:'2:35',genre:'Pop',favorite:false},
-                {songTitle:'All Right',artist:'Christopher Cross',length:'4:13',genre:'Pop',favorite:false}],
-            songItem:{songTitle:'',artist:'',length:'',genre:'',favorite:false}
+            songList:[{songTitle:'Take on Me',album:'Hunting High and Low',artist:'a-ha',length:'3:45',genre:'Rock',favorite:true},
+                {songTitle:'Be Alright',artist:'Zapp',album:'Zapp',length:'7:52',genre:'R&B',favorite:true},
+                {songTitle:'This Must Be the Place',album:'',artist:'Talking Heads',length:'4:56',genre:'Pop',favorite:false},
+                {songTitle:'Oogum Boogum Song',album:'',artist:'Brenton Wood',length:'3:06',genre:'Soul',favorite:false},
+                {songTitle:'You`re so Good to Me',album:'',artist:'The Beach Boys',length:'2:16',genre:'Surf',favorite:false},
+                {songTitle:'Crazy Love',album:'',artist:'Van Morrison',length:'2:35',genre:'Pop',favorite:false},
+                {songTitle:'All Right',album:'',artist:'Christopher Cross',length:'4:13',genre:'Pop',favorite:false}],
+            songItem:{songTitle:'',album:'',artist:'',length:'',genre:'',favorite:false}
         }
 
     },
