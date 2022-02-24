@@ -19,7 +19,7 @@ const app = new Vue({
 
     },
     methods:{
-        addTrash:function(){
+        addSong:function(){
             console.log('Works!')
             this.songList.push(this.songItem);
             this.songItem = {songTitle:'',artist:'',length:'',genre:'',favorite:false}

@@ -1,3 +1,5 @@
+//pass up the @emit
+
 Vue.component("song-card-list", {
     props: {
         songs: {
@@ -14,7 +16,9 @@ Vue.component("song-card-list", {
         }
     },
     methods:{
-
+        trigger(){
+            this.$emit('trigger')
+        }
     }
     ,
 
@@ -23,7 +27,7 @@ Vue.component("song-card-list", {
 <v-row no-gutters>
     <v-col cols="auto">
         <h1 class="text-center title">Add Song</h1>
-        <add-item v-model:songs="songs" v-bind:songs="songs"  v-model:songItem="songitem" v-bind:song-item="songitem"></add-item>
+        <add-item @trigger="trigger" v-model:songs="songs" v-bind:songs="songs"  v-model:songItem="songitem" v-bind:song-item="songitem"></add-item>
 
     </v-col>
     <v-col>
@@ -108,7 +112,9 @@ Vue.component('add-item', {
         }
     },
     methods:{
-
+        trigger(){
+            this.$emit('trigger')
+        }
     }
 
     , template: `
@@ -118,43 +124,18 @@ Vue.component('add-item', {
     outlined>
     <v-list-item three-line>
     
-      <v-list-item-content>
-        <v-list-item-title class="text-h6 mb-1">
-         
-        </v-list-item-title>
+    <v-list-item-content>
         
-        <form @submit.prevent="$emit('add-song')">
-        <v-text-field
-      v-model="songItem.songTitle"
-      label="Title"
-      required
-    ></v-text-field>
-        
-        <v-text-field
-      v-model="songItem.artist"
-      label="Artist"
-      
-    ></v-text-field>
-        <v-text-field
-      v-model="songItem.length"
-      
-      label="Genre"
-      
-    ></v-text-field>
-    <v-text-field
-      v-model="songItem.genre"
-      
-      label="Length"
-      
-    ></v-text-field>
-        
-      
-        <button  type="submit">Add</button>
-        </form>
-      </v-list-item-content>
-
+        <v-form  @submit.prevent="trigger" >
+        <v-text-field v-model="songItem.songTitle" label="Title"></v-text-field>
+        <v-text-field v-model="songItem.artist" label="Artist" ></v-text-field>
+        <v-text-field v-model="songItem.length" label="Genre"></v-text-field>
+        <v-text-field v-model="songItem.genre" label="Length" ></v-text-field>
+        <v-btn type="submit">Add</v-btn>
+        </v-form>
+    
+    </v-list-item-content>
       <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-      
     </v-list-item>
 
   </v-card> `
