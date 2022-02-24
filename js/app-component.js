@@ -51,60 +51,50 @@ Vue.component('song', {
             required:true
         }
     },
-    data:function () {
-        return{
-            albumSrc: ''
-        }
-    }
-    ,
     methods:{
         favoriteChange(e) {
-
-
 
             for (let i = 0; i < this.songs.length; i++) {
                 let songThingy = this.songs[i]
                 if (songThingy === e){
                     this.songs.find(ev => ev === songThingy).favorite = e.favorite
                 }
-
             }
-
+            localStorage.setItem('songs',JSON.stringify(this.songs))
         },
         removeSong(){
-
+        document.getElementById("this.song.songTitle");
         let x = this.songs.indexOf(this.song)
         this.songs.splice(x,1)
 
+        localStorage.setItem('songs',JSON.stringify(this.songs))
 
         },
         SaveSong(error,response){
-            if (error === null){
-            this.albumSrc = response
-            }
-            else
-                this.albumSrc = 'https://upload.wikimedia.org/wikipedia/commons/3/3c/No-album-art.png'
-
+            this.song.albumImg = response;
+        },
+        GetTheGabagool(){
+            albumArt(this.song.artist,{album:this.song.album},this.SaveSong)
         }
-
 
 
     },
     created: function(){
-          albumArt(this.song.artist,{album:this.song.album},this.SaveSong)
-
+        this.GetTheGabagool()
       }
     ,
     template: `
-    <v-card
-    class="d-inline-block ma-3"
-    min-width="344"
+    <v-card :id="this.song.songTitle"
+    class="d-inline-block mb-4 ml-3"
+    min-width="300"
     max-width="344"
     outlined>
     
     <v-img
-      height="250"
-      :src="this.albumSrc"
+      :id="song.albumSrc"
+      min-width="300"
+      max-width="344"
+      :src="song.albumImg"
     ></v-img>
     
     <v-list-item  three-line>
@@ -180,9 +170,9 @@ Vue.component('add-item', {
     , template: `
 <v-card
     class="ma-3 d-inline-block"
-   min-width="344"
+    min-width="300"
     max-width="344"
-    outlined>
+    outlined >
     
     <v-list-item>
     
