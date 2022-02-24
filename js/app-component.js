@@ -23,7 +23,7 @@ Vue.component("song-card-list", {
 
     template: `
 <div  class="d-inline">
-<v-row>
+<v-row class="pa-0 ma-0">
     <v-col cols="auto">
         <h1 class="text-center title">Add Song</h1>
         <add-item @trigger="trigger" v-model:songs="songs" v-bind:songs="songs"  v-model:songItem="songitem" v-bind:song-item="songitem"></add-item>

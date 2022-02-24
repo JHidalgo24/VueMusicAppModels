@@ -19,15 +19,9 @@
                 <v-toolbar-title>{{title}}</v-toolbar-title>
             </v-app-bar>
 
-
-
-
-            <v-main fluid grid-list-md text-xs-center>
+            <v-main >
                 <song-card-list @trigger="addSong"  v-model:songs="songList" v-bind:songs="songList" v-bind:songitem="songItem"></song-card-list>
             </v-main>
-
-
-
         <v-footer app
                 absolute
                 dark dense>
