@@ -24,7 +24,7 @@ Vue.component("song-card-list", {
 
     template: `
 <div  class="d-inline">
-<v-row no-gutters>
+<v-row>
     <v-col cols="auto">
         <h1 class="text-center title">Add Song</h1>
         <add-item @trigger="trigger" v-model:songs="songs" v-bind:songs="songs"  v-model:songItem="songitem" v-bind:song-item="songitem"></add-item>
@@ -53,6 +53,7 @@ Vue.component('song', {
     }, template: `
     <v-card
     class="d-inline-block ma-3"
+    min-width="344"
     max-width="344"
     outlined>
     <v-list-item three-line>
@@ -119,18 +120,20 @@ Vue.component('add-item', {
 
     , template: `
 <v-card
-    class="d-inline-block ma-3"
+    class="ma-3 d-inline-block"
+   min-width="344"
     max-width="344"
     outlined>
-    <v-list-item three-line>
+    
+    <v-list-item>
     
     <v-list-item-content>
         
         <v-form  @submit.prevent="trigger" >
-        <v-text-field v-model="songItem.songTitle" label="Title"></v-text-field>
-        <v-text-field v-model="songItem.artist" label="Artist" ></v-text-field>
-        <v-text-field v-model="songItem.length" label="Genre"></v-text-field>
-        <v-text-field v-model="songItem.genre" label="Length" ></v-text-field>
+        <v-text-field v-model="songItem.songTitle" label="Title" required></v-text-field>
+        <v-text-field v-model="songItem.artist" label="Artist" required></v-text-field>
+        <v-text-field v-model="songItem.length" label="Genre" required></v-text-field>
+        <v-text-field v-model="songItem.genre" label="Length" required></v-text-field>
         <v-btn type="submit">Add</v-btn>
         </v-form>
     
