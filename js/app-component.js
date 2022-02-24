@@ -79,8 +79,11 @@ Vue.component('song', {
 
         },
         SaveSong(error,response){
-
+            if (error === null){
             this.albumSrc = response
+            }
+            else
+                this.albumSrc = 'https://upload.wikimedia.org/wikipedia/commons/3/3c/No-album-art.png'
 
         }
 
@@ -182,13 +185,17 @@ Vue.component('add-item', {
     
     <v-list-item-content>
         
-        <v-form  @submit.prevent="trigger" >
-        <v-text-field v-model="songItem.songTitle" label="Title" required></v-text-field>
-        <v-text-field v-model="songItem.album" label="Album" required></v-text-field>
+        <v-form ref="form" lazy-validation  @submit.prevent="trigger" >
+        <v-text-field #validate v-model="songItem.songTitle" label="Title" required></v-text-field>
         <v-text-field v-model="songItem.artist" label="Artist" required></v-text-field>
-        <v-text-field v-model="songItem.length" label="Genre" required></v-text-field>
-        <v-text-field v-model="songItem.genre" label="Length" required></v-text-field>
+        <v-text-field v-model="songItem.album" label="Album" required></v-text-field>
+        <v-text-field v-model="songItem.length" label="Length" required></v-text-field>
+        <v-text-field v-model="songItem.genre" label="Genre " required></v-text-field>
+        <v-checkbox v-model="songItem.favorite"  label="Favorite"></v-checkbox>
         <v-btn type="submit">Add</v-btn>
         </v-form>
+    </v-list-item-content>
+      <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+    </v-list-item>
   </v-card> `
 })
