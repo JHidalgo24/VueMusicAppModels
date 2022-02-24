@@ -191,11 +191,10 @@ Vue.component('add-item', {
         <v-text-field v-model="songItem.album" label="Album" required></v-text-field>
         <v-text-field v-model="songItem.length" label="Length" required></v-text-field>
         <v-text-field v-model="songItem.genre" label="Genre " required></v-text-field>
-        <v-checkbox v-model="songItem.favorite"  label="Favorite"></v-checkbox>
+        <v-checkbox color="green" v-model="songItem.favorite"  label="Favorite"></v-checkbox>
         <v-btn type="submit">Add</v-btn>
         </v-form>
     </v-list-item-content>
-      <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
     </v-list-item>
   </v-card> `
 })
