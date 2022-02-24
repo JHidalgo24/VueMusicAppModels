@@ -101,6 +101,12 @@ Vue.component('song', {
     min-width="344"
     max-width="344"
     outlined>
+    
+    <v-img
+      height="250"
+      :src="this.albumSrc"
+    ></v-img>
+    
     <v-list-item  three-line>
       <v-list-item-content>
         <v-list-item-title class="text-h6 mb-1">
@@ -118,10 +124,7 @@ Vue.component('song', {
         
         </v-card-actions>
       </v-list-item-content>
-
-      <v-list-item-avatar tile size="80" color="grey">
       
-      <img :src="this.albumSrc" :id="this.song.songTitle"></img>
 </v-list-item-avatar>
     </v-list-item>
 
