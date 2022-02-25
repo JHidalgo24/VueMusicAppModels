@@ -97,8 +97,13 @@ Vue.component('song', {
 
         },
         SaveSong(error,response){
-            this.song.albumImg = response;
-        },
+            console.log(response)
+            if (response === error){
+            this.song.albumImg = "https://millennialdiyer.com/wp1/wp-content/uploads/2018/11/Tips-Tricks-for-Assigning-Album-Cover-Art-to-your-Music-Library-Default-Image.jpg"
+            }
+            else
+                this.song.albumImg = response
+            },
         getSongArt(){
             albumArt(this.song.artist,{album:this.song.album},this.SaveSong)
         }
