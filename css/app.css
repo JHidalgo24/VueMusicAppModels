@@ -6,3 +6,8 @@
     font-family: Roboto, Sana;
     color: black;
 }
+.hidden-list{
+    display: none;
+    margin: 0;
+    padding: 0;
+}

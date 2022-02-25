@@ -13,15 +13,32 @@
 <div @trigger="addSong" id="app" >
     <v-app style="background-color: black" >
 
-            <v-app-bar
-                    color="green" app dark dense>
-                <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+
+        <div>
+            <v-app-bar  color="green " dark>
+
+
                 <v-toolbar-title>{{title}}</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-btn v-on:click="hideSongs" color="green ">{{buttonLabel}} &nbsp; <v-icon color="yellow">mdi-star</v-icon></v-btn>
             </v-app-bar>
+        </div>
 
             <v-main>
-                <song-card-list @trigger="addSong"  v-model:songs="songList" v-bind:songs="songList" v-bind:songitem="songItem"></song-card-list>
+
+                <v-container fluid>
+                <song-card-list @trigger="addSong" v-bind:item-hidden="itemHidden" v-model:itemHidden="itemHidden"  v-model:songs="songList" v-bind:songs="songList" v-bind:songitem="songItem"></song-card-list>
+                </v-container>
+
+            <v-spacer></v-spacer>
+
             </v-main>
+
+
+
         <v-footer app
                 absolute
                 dark dense>

@@ -6,18 +6,26 @@ Vue.component("song-card-list", {
         },
         songitem: {
             type: Object, required: true
+        },
+        itemHidden:{
+            type:Boolean,
+            required:true
         }
     },
     data:function () {
         return{
             data_songs:this.songs,
-            data_songitem:this.songitem
+            data_songitem:this.songitem,
+            componentKey: 0
         }
     },
     methods:{
         trigger(){
             this.$emit('trigger')
         }
+    },
+    created:function () {
+        this.songs.sort(function(a, b){return b.favorite - a.favorite});
     }
     ,
 
@@ -29,16 +37,24 @@ Vue.component("song-card-list", {
         <add-item @trigger="trigger" v-model:songs="songs" v-bind:songs="songs"  v-model:songItem="songitem" v-bind:song-item="songitem"></add-item>
 
     </v-col>
-    <v-col>
-        <h1 class="text-center title">Songs</h1>
-            <span v-for="song in songs">
-                <song v-model:songs="songs" v-bind:songs="songs"  v-bind:song="song"> </song>
+    <v-col v-show="itemHidden">
+        <h1  class="text-center title">Songs</h1>
+            <span v-for="(song,val) in songs">
+                <song v-bind:itemHidden="itemHidden" v-model:itemHidden="itemHidden" v-model:songs="songs" v-bind:songs="songs"  v-bind:song="song"> </song>
             </span> 
+    </v-col>
+    <v-col v-show="!itemHidden">
+        <h1 class="text-center title">Favorite Songs</h1>
+             <span v-for="(song,val) in songs.filter(ev => ev.favorite === true)">
+                <song v-bind:itemHidden="!itemHidden" v-model:itemHidden="!itemHidden"  v-model:songs="songs" v-bind:songs="songs"  v-bind:song="song"> </song>
+             </span>
     </v-col>
 </v-row>
 </div>
 `
 })
+
+
 
 Vue.component('song', {
     props: {
@@ -49,8 +65,18 @@ Vue.component('song', {
         songs:{
             type:Array,
             required:true
+        },
+        itemHidden: {
+            type:Boolean,
+            required: true
         }
     },
+    data:function(){
+        return{
+            showBtn:this.itemHidden
+        }
+    }
+    ,
     methods:{
         favoriteChange(e) {
 
@@ -58,12 +84,12 @@ Vue.component('song', {
                 let songThingy = this.songs[i]
                 if (songThingy === e){
                     this.songs.find(ev => ev === songThingy).favorite = e.favorite
+
                 }
+                localStorage.setItem('songs',JSON.stringify(this.songs))
             }
-            localStorage.setItem('songs',JSON.stringify(this.songs))
         },
         removeSong(){
-        document.getElementById("this.song.songTitle");
         let x = this.songs.indexOf(this.song)
         this.songs.splice(x,1)
 
@@ -73,20 +99,19 @@ Vue.component('song', {
         SaveSong(error,response){
             this.song.albumImg = response;
         },
-        GetTheGabagool(){
+        getSongArt(){
             albumArt(this.song.artist,{album:this.song.album},this.SaveSong)
         }
 
 
     },
     created: function(){
-        this.GetTheGabagool()
+        this.getSongArt()
       }
     ,
     template: `
     <v-card :id="this.song.songTitle"
-    class="d-inline-block mb-4 ml-3"
-    min-width="300"
+    class="d-inline-block mb-4 ml-5"
     max-width="344"
     outlined>
     
@@ -108,10 +133,8 @@ Vue.component('song', {
         <v-list-item-subtitle>Genre:  {{song.genre}}</v-list-item-subtitle>
         
         <v-card-actions>
-      
-        <favorite-btn @change-btn="favoriteChange" v-model:song="song" v-bind:song="song"></favorite-btn>
-        <v-btn v-on:click="removeSong" class="red">Remove</v-btn>
-        
+        <favorite-btn v-show="showBtn" @change-btn="favoriteChange" v-model:song="song" v-bind:song="song"></favorite-btn>
+        <v-btn v-show="showBtn" v-on:click="removeSong" class="red"><v-icon>mdi-trash-can</v-icon></v-btn>
         </v-card-actions>
       </v-list-item-content>
       
