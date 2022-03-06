@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div @trigger="addSong" id="app" >
+<div  id="app" >
     <v-app >
         <div>
             <template>
@@ -24,7 +24,7 @@
                         <v-toolbar-title>{{title}}</v-toolbar-title>
                         <v-spacer></v-spacer>
 
-                        <v-btn icon id="cart">
+                        <v-btn @click="cartVisibility = !cartVisibility" icon id="cart">
                             <v-icon>mdi-cart</v-icon>
                         </v-btn>
 
@@ -36,7 +36,9 @@
 
 
             <v-main>
-            <store></store>
+            <store :cartview="cartVisibility"></store>
+
+
             </v-main>
 
 

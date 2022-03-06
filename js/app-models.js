@@ -20,11 +20,11 @@ class Vinyl extends SongItem{
     artist = '';
     length = '';
     genre = '';
-    rpm = ''
-    sides = ''
+    rpm = 0
+    sides = 0
+    price = 0
 
-
-    constructor(album,artist,length,genre,rpm,sides) {
+    constructor(album,artist,length,genre,rpm,sides,price) {
         super();
         this.album = album;
         this.artist = artist;
@@ -32,6 +32,7 @@ class Vinyl extends SongItem{
         this.genre = genre;
         this.rpm = rpm;
         this.sides = sides
+        this.price = price
     }
 
 }
@@ -44,14 +45,17 @@ class CD extends SongItem{
     length = '';
     genre = '';
     trackCount = '';
+    price = 0
 
-    constructor(album,artist,length,genre,trackCount) {
+
+    constructor(album,artist,length,genre,trackCount,price) {
         super();
         this.album = album;
         this.artist = artist;
         this.length = length;
         this.genre = genre;
         this.trackCount = trackCount;
+        this.price = price
     }
 }
 
@@ -60,12 +64,14 @@ class Cassette extends SongItem{
     artist = '';
     length = '';
     genre = '';
+    price = 0
 
-    constructor(album,artist,length,genre) {
+    constructor(album,artist,length,genre,price) {
         super();
         this.album = album;
         this.artist = artist;
         this.length = length;
         this.genre = genre;
+        this.price = price
     }
 }
