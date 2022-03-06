@@ -26,9 +26,6 @@ const StoreComponent = Vue.component('store',{
                 this.cartItems.push(e);
 
             }
-        },
-        showCart(){
-
         }
     }
     ,
@@ -45,7 +42,7 @@ const StoreComponent = Vue.component('store',{
     <h1 class="text-center">
       Cart
     </h1>
-    <cart :cartItems="cartItems"></cart>
+    <cart v-bind:cartItems="cartItems"></cart>
     </div>
     </span>
     `
@@ -213,6 +210,11 @@ const CassetteComponent = Vue.component('Cassette',{
 
 const CartItemComponent = Vue.component('cart-item',{
     extends: StoreItemComponent,
+    methods:{
+      removeEmit(){
+          this.$emit('remove-emit',this.song)
+      }
+    },
     template:`
     <span>
   <v-card
@@ -240,7 +242,9 @@ const CartItemComponent = Vue.component('cart-item',{
       <v-btn
         outlined
         rounded
-        color="red">
+        color="red"
+        @click="removeEmit"
+        >
         Remove
       </v-btn>
       <v-spacer></v-spacer>
@@ -258,26 +262,30 @@ const CartComponent = Vue.component('cart',{
             required: true
         }
     },
-    data(){
-        return{
-            total:0
+    computed:{
+        totalSum(){
+            let sum = 0;
+            for (let i = 0; i < this.cartItems.length; i++) {
+                sum+=this.cartItems[i].price
+
+            }
+
+            return sum;
         }
     },
     methods:{
-        totalSum(){
-            for (const x in this.cartItems) {
-                this.total += x.price
-            }
-            console.log(this.total)
+        removeSong(e){
+            this.cartItems.splice(this.cartItems.indexOf(e),1)
+
         }
     }
     ,
     template:`
     <span>
-    <cart-item v-on:change="totalSum" style="display: inline-block" v-for="song in cartItems" :key="song.album" :song="song">
+    <cart-item @remove-emit="removeSong" v-on:change="totalSum" style="display: inline-block" v-for="song in cartItems" :key="song.album" :song="song">
     
     </cart-item>
-    <h1 class="text-center">Total: {{total}}</h1>
+    <h1 class="text-center">Total: {{totalSum}}</h1>
     </span>
     `
 })
