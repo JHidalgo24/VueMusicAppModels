@@ -12,32 +12,32 @@
 <body>
 
 <div @trigger="addSong" id="app" >
-    <v-app style="background-color: black" >
-
-
-
+    <v-app >
         <div>
-            <v-app-bar  color="green " dark>
+            <template>
+                <div>
+                    <v-app-bar
+                            color="green accent-4"
+                            dark
+                    >
+                        <v-icon large>mdi-disc</v-icon>
+                        <v-toolbar-title>{{title}}</v-toolbar-title>
+                        <v-spacer></v-spacer>
+
+                        <v-btn icon id="cart">
+                            <v-icon>mdi-cart</v-icon>
+                        </v-btn>
 
 
-                <v-toolbar-title>{{title}}</v-toolbar-title>
-
-                <v-spacer></v-spacer>
-
-                <v-btn v-on:click="hideSongs" color="green ">{{buttonLabel}} &nbsp; <v-icon color="yellow">mdi-star</v-icon></v-btn>
-            </v-app-bar>
+                    </v-app-bar>
+                </div>
+            </template>
         </div>
 
+
             <v-main>
-
-                <v-container fluid>
-                <song-card-list @trigger="addSong" v-bind:item-hidden="itemHidden" v-model:itemHidden="itemHidden"  v-model:songs="songList" v-bind:songs="songList" v-bind:songitem="songItem"></song-card-list>
-                </v-container>
-
-            <v-spacer></v-spacer>
-
+            <store></store>
             </v-main>
-
 
 
         <v-footer app
@@ -45,7 +45,6 @@
                 dark dense>
             <v-card-text class="py-2 white--text text-center">
                 <strong>{{title}} - 2022</strong>
-
             </v-card-text>
             </v-card>
         </v-footer>
@@ -59,6 +58,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 <script type="text/javascript" src="https://unpkg.com/album-art"></script>
+<script src="js/app-models.js"></script>
 <script src="js/app-component.js"></script>
 <script src="js/app.js"></script>
 
