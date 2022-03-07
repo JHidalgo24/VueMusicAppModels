@@ -7,7 +7,8 @@ const app = new Vue({
     data:function () {
         return{
             title:'Re-chord',
-            cartVisibility:false
+            cartVisibility:false,
+            wishVisibility:false
         }
 
     },

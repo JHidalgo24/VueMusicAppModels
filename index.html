@@ -23,10 +23,15 @@
                         <v-icon large>mdi-disc</v-icon>
                         <v-toolbar-title>{{title}}</v-toolbar-title>
                         <v-spacer></v-spacer>
-
+                        WishList
+                        <v-btn @click="wishVisibility = !wishVisibility" icon id="wishList">
+                            <v-icon>mdi-heart</v-icon>
+                        </v-btn>
+                        Cart
                         <v-btn @click="cartVisibility = !cartVisibility" icon id="cart">
                             <v-icon>mdi-cart</v-icon>
                         </v-btn>
+
 
 
                     </v-app-bar>
@@ -36,8 +41,7 @@
 
 
             <v-main>
-            <store :cartview="cartVisibility"></store>
-
+            <store v-bind:wishview="wishVisibility" :cartview="cartVisibility"></store>
 
             </v-main>
 

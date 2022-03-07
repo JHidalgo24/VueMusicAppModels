@@ -4,6 +4,10 @@ const StoreComponent = Vue.component('store',{
         cartview:{
             type:Boolean,
             required:true
+        },
+        wishview:{
+            type:Boolean,
+            required:true
         }
     },
     data(){
@@ -16,15 +20,19 @@ const StoreComponent = Vue.component('store',{
                 new CD("Who's Next",'The Who',153,'Rock','29',12.99),
                 new Vinyl('30','Adele',58,'Pop',33,2,12.99),
             ],
-            cartItems:[]
+            cartItems:[],
+            wishlist:[]
         }
     },
     methods:{
         addSong(e){
-
             if (!this.cartItems.find(ele => ele === e)){
                 this.cartItems.push(e);
-
+            }
+        },
+        addWishList(e){
+            if (!this.wishlist.find(ele => ele === e)){
+                this.wishlist.push(e);
             }
         }
     }
@@ -32,17 +40,23 @@ const StoreComponent = Vue.component('store',{
     template:`
     
     <span>
-    <div v-show="!cartview">
+    <div v-show="!cartview && !wishview">
     <h1 class="text-center">
       Store
     </h1>
-    <song-item  @add-song="addSong" v-for="song in songs"  :song="song" :key="song.album"></song-item> 
+    <song-item @add-wish="addWishList"  @add-song="addSong" v-for="song in songs"  :song="song" :key="song.album"></song-item> 
     </div>
     <div v-show="cartview">
     <h1 class="text-center">
       Cart
     </h1>
     <cart v-bind:cartItems="cartItems"></cart>
+    </div>
+    <div v-show="wishview">
+    <h1 class="text-center">
+      WishList
+    </h1>
+    <wishlist v-bind:wishlist="wishlist"></wishlist>
     </div>
     </span>
     `
@@ -60,6 +74,9 @@ const StoreItemComponent = Vue.component('SongItem',{
     methods:{
         emitSelf(){
             this.$emit('add-song',this.song)
+        },
+        emitFavorite(){
+            this.$emit('add-wish',this.song)
         }
 
     }
@@ -71,7 +88,7 @@ const StoreItemComponent = Vue.component('SongItem',{
     },
 
     template: `
-    <component @add-song="emitSelf" style="display: inline-block"  :is="typeOfSong" :song="song">
+    <component @add-wish="emitFavorite" @add-song="emitSelf" style="display: inline-block"  :is="typeOfSong" :song="song">
     </component>
     `
 })
@@ -111,6 +128,15 @@ const VinylComponent = Vue.component('Vinyl',{
         @click="emitSelf"
       >
         Add to Cart
+      </v-btn>
+      <v-btn
+        outlined
+        rounded
+        text
+        type="button"
+        @click="emitFavorite"
+      >
+        <v-icon color="yellow">mdi-heart</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
       <p>Cost: {{song.price}}</p>
@@ -156,6 +182,15 @@ const CDComponent = Vue.component('CD',{
       >
         Add to Cart
       </v-btn>
+      <v-btn
+        outlined
+        rounded
+        text
+        type="button"
+        @click="emitFavorite"
+      >
+        <v-icon color="yellow">mdi-heart</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
       <p>Cost: {{song.price}}</p>
     </v-card-actions>
@@ -199,6 +234,15 @@ const CassetteComponent = Vue.component('Cassette',{
         @click="emitSelf"
       >
         Add to Cart
+      </v-btn>
+      <v-btn
+        outlined
+        rounded
+        text
+        type="button"
+        @click="emitFavorite"
+      >
+        <v-icon color="yellow">mdi-heart</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
       <p>Cost: {{song.price}}</p>
@@ -290,5 +334,27 @@ const CartComponent = Vue.component('cart',{
     `
 })
 
+const WishListComponent = Vue.component('wishlist',{
+    props:{
+        wishlist:{
+            type:Array,
+            required: true
+        }
+    },
+    methods:{
+        removeSong(e){
+            this.wishlist.splice(this.wishlist.indexOf(e),1)
+
+        }
+    }
+    ,
+    template:`
+    <span>
+    <cart-item @remove-emit="removeSong" style="display: inline-block" v-for="song in wishlist" :key="song.album+wishlist" :song="song">
+    </cart-item>
+    
+    </span>
+    `
+})
 
 
