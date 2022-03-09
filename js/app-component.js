@@ -36,6 +36,7 @@ const StoreComponent = Vue.component('store',{
             }
         }
     }
+
     ,
     template:`
     
@@ -46,13 +47,13 @@ const StoreComponent = Vue.component('store',{
     </h1>
     <song-item @add-wish="addWishList"  @add-song="addSong" v-for="song in songs"  :song="song" :key="song.album"></song-item> 
     </div>
-    <div v-show="cartview">
+    <div v-if="cartview && wishview === false">
     <h1 class="text-center">
       Cart
     </h1>
     <cart v-bind:cartItems="cartItems"></cart>
     </div>
-    <div v-show="wishview">
+    <div v-if="wishview && cartview === false">
     <h1 class="text-center">
       WishList
     </h1>
@@ -74,9 +75,12 @@ const StoreItemComponent = Vue.component('SongItem',{
     methods:{
         emitSelf(){
             this.$emit('add-song',this.song)
+            this.song.stock = 'Out Of Stock';
+            console.log(this.song.stock)
         },
         emitFavorite(){
             this.$emit('add-wish',this.song)
+
         }
 
     }
@@ -126,8 +130,19 @@ const VinylComponent = Vue.component('Vinyl',{
         text
         type="button"
         @click="emitSelf"
+        v-if="song.stock === 'Stocked'"
       >
         Add to Cart
+      </v-btn>
+      <v-btn
+        outlined
+        rounded
+        text
+        type="button"
+        v-else
+        disabled
+      >
+        Sold Out
       </v-btn>
       <v-btn
         outlined
@@ -179,8 +194,19 @@ const CDComponent = Vue.component('CD',{
         text
         type="button"
         @click="emitSelf"
+        v-if="song.stock === 'Stocked'"
       >
         Add to Cart
+      </v-btn>
+      <v-btn
+        outlined
+        rounded
+        text
+        type="button"
+        v-else
+        disabled
+      >
+        Sold Out
       </v-btn>
       <v-btn
         outlined
@@ -232,8 +258,19 @@ const CassetteComponent = Vue.component('Cassette',{
         text
         type="button"
         @click="emitSelf"
+        v-if="song.stock === 'Stocked'"
       >
         Add to Cart
+      </v-btn>
+      <v-btn
+        outlined
+        rounded
+        text
+        type="button"
+        v-else
+        disabled
+      >
+        Sold Out
       </v-btn>
       <v-btn
         outlined
@@ -288,6 +325,7 @@ const CartItemComponent = Vue.component('cart-item',{
         rounded
         color="red"
         @click="removeEmit"
+        v-if=""
         >
         Remove
       </v-btn>
@@ -350,6 +388,7 @@ const WishListComponent = Vue.component('wishlist',{
     ,
     template:`
     <span>
+    
     <cart-item @remove-emit="removeSong" style="display: inline-block" v-for="song in wishlist" :key="song.album+wishlist" :song="song">
     </cart-item>
     

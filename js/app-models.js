@@ -10,8 +10,6 @@ function SongItem(){
         this.stock = IN_STOCK.NO_STOCK;
     }
 
-
-
 }
 
 class Vinyl extends SongItem{
@@ -36,7 +34,6 @@ class Vinyl extends SongItem{
     }
 
 }
-
 
 class CD extends SongItem{
 
